@@ -1,0 +1,130 @@
+/* 
+    Document   : css
+    Created on : 29/09/2011, 01:55:23 AM
+    Author     : jose
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+/*Etiquetas*/
+
+html, body{
+    /*
+        Es necesario establecer la altura de los elementos contenedores en 100% si se desea ajustar
+        la altura de los elementos contenidos en base a porcentajes.
+    */
+    height: 100%;
+}
+
+body{
+    position: relative;
+    margin: auto;
+    width: 1000px;
+    background-color: #ccc;
+}
+
+label{
+    width: 50px;
+    margin-right: 60px;
+    float: left;
+    display: block;
+}
+
+fieldset{
+    border: 1px solid #ff6633;
+    padding: 15px;
+    margin-top: 20px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+legend{
+    border: 1px solid #ff6633;
+    background-color: #ffcc33;
+    border-radius: 5px;
+}
+
+a{
+    text-decoration: none;
+    color: #3366ff;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+input[type=text], input[type=password]{
+    height: 20px;
+    width: 200px;
+    border-color: #ff6633;
+    padding: 2px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+input[type=radio]{
+    border: 1px solid #ff6633;/*No funciona*/
+    margin-bottom: 15px;
+}
+
+input[type=submit], input[type=reset], input[type=button]{
+    height: 25px;
+    width: 120px;
+    border-color: #ff6633;
+    background-color: #ff9c26; 
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+/*IDs*/
+
+#encabezado{
+    clear: both;
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+    height: 80px;
+    text-align: center;
+    background-color: #ff6633;
+}
+
+#cuerpo{
+    clear: both;
+    float: left;
+    width: 100%;
+    background-color: #fff;
+    height: 550px;
+}
+
+#contenido{
+    float: left;
+    height: 100%;
+    width: 98%;
+    padding-left: 1%;
+    padding-right: 1%;
+    background-color: white;
+    overflow: auto;
+    font-size: 12px;
+}
+
+#formularios{
+    float: right;
+    width: 400px;
+    margin-top: 20px;
+}
+
+#pie_pagina{
+    clear: both;
+    float: left;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    background-color: #ff6633;
+}
+
+/*Clases*/
