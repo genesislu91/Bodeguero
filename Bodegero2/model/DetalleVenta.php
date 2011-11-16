@@ -67,7 +67,7 @@ class DetalleVenta implements InterfaceModels{
         $sql->addValues($this->_precioVenta);
         $sql->addValues($this->_cantidad);
         $sql->addValues($this->_subtotal);
-         Persistence::consultar($sql, 0);
+        return  Persistence::consultar($sql, 0);
     }
 }
 ?>

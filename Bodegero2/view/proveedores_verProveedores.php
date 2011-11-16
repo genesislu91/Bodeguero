@@ -8,79 +8,59 @@
                 echo $opcionMenuLateral;
             }
             ?>
-        </ul>		
+        </ul>
     </div>
     <div id="contenido">
         <center><h1>Mis Proveedores</h1></center>
-        <form action="" method="POST" id="formulario">
+        <form action="?opcion=buscarProveedor" method="POST" id="formulario">
             <fieldset>
                 <legend>Ver Proveedores</legend>
                 <div id="bloque_izquierdo">
-                    <input type="radio" name="verp" /><label for="activos">Activos:</label> <br/>
-                    <input type="radio" name="verp" /><label for="inactivos">Inactivos:</label> <br/>
-                    <input type="radio" name="verp" /><label for="todos">Todos:</label> <br/>
-                    <input type="radio" name="verp" /><label for="nombre">Por Nombre:</label> <input type="text name="nombreproveedor" /><br/>
-                    <br/>			
-                </div>	
+                    <p>Buscar por: <select id="tipoBusqueda" name="busqueda">
+                            <option value="1">RUC</option>
+                            <option value="2">Nombre</option>
+                            <option value="3">Todos</option>
+                        </select> <input type="text" name="campo"/> <br/>
+                </div>
 
                 <div class="bloque_derecho_boton">
-
-                    <input type="submit" name="" value="Ver" /><br/>		
+                    <input type="submit"  value="Ver" /><br/>
                 </div>
 
                 <div id="bloque_centrado">
-                    <table border="1">					
+                   <?php if ($filtro != null ) {?>
+                    <table border="1">
                         <thead>
                             <tr>
-                                <th>Codigo</th>
-                                <th>Empresa</th>
+                                <th>Id</th>
+                                <th>Razon Social/Nombre</th>
                                 <th>Dirección</th>
                                 <th>Ruc</th>
                                 <th>Telefono</th>
                                 <th>Correo Electrónico</th>
+                                <th>Accion</th>
                             </tr>
                         </thead>
-                        <tbody>		
+                        <tbody>
+                          <?php foreach($filtro as $fil) { ?>
                             <tr>
-                                <td>001</td>
-                                <td>Edgar</td>
-                                <td>Manrique</td>
-                                <td>Lima</td>
-                                <td>4567876455</td>
-                                <td>maklo@hotmail.com</td>
-                            </tr>							
-                            <tr>
-                                <td>001</td>
-                                <td>Edgar</td>
-                                <td>Manrique</td>
-                                <td>Lima</td>
-                                <td>4567876455</td>
-                                <td>maklo@hotmail.com</td>
-                            </tr>							
-                            <tr>
-                                <td>001</td>
-                                <td>Edgar</td>
-                                <td>Manrique</td>
-                                <td>Lima</td>
-                                <td>4567876455</td>
-                                <td>maklo@hotmail.com</td>
-                            </tr>							
-                            <tr>
-                                <td>001</td>
-                                <td>Edgar</td>
-                                <td>Manrique</td>
-                                <td>Lima</td>
-                                <td>4567876455</td>
-                                <td>maklo@hotmail.com</td>
+                                <td><?php echo $fil[0]->getProveedorId(); ?></td>
+                                <td><?php echo $fil[1]->getRazonSocial(); ?></td>
+                                <td><?php echo $fil[1]->getDireccion(); ?></td>
+                                <td><?php echo $fil[1]->getRuc(); ?></td>
+                                <td><?php echo $fil[1]->getTelefono(); ?></td>
+                                <td><?php echo $fil[1]->getCorreoElectronico(); ?></td>
+                                <td><a href="?opcion=modificar_proveedor&id=<?php echo $fil[1]->getPersonaId(); ?>">Modificar Datos</a></td>
                             </tr>
+                           <?php } ?>
                         </tbody>
                     </table>
-
+                    <?php } ?>
                 </div>
 
 
-            </fieldset>	
-        </form>	
+            </fieldset>
+        </form>
 
 
 

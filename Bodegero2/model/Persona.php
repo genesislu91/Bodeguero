@@ -24,12 +24,24 @@ abstract class Persona {
     public function getDireccion() {
         return $this->_direccion;
     }
-    public  function actualizar(){
+    public function setTelefono($_telefono) {
+        $this->_telefono = $_telefono;
+    }
+
+    public function setCorreoElectronico($_correoElectronico) {
+        $this->_correoElectronico = $_correoElectronico;
+    }
+
+    public function setDireccion($_direccion) {
+        $this->_direccion = $_direccion;
+    }
+
+        public  function actualizar(){
         $sql = new SQL();
         $sql->addTable("persona");
         $sql->addTipo('actualizar');
         $sql->addValues("telefono = '$this->_telefono'");
-        $sql->addValues("correo = '$this->_correoElectronico'");
+        $sql->addValues("correoElectronico = '$this->_correoElectronico'");
         $sql->addValues("direccion='$this->_direccion'");
         $sql->addWhere("personaId='$this->_personaId'");
         Persistence::consultar($sql, 0);

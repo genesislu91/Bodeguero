@@ -28,7 +28,20 @@ abstract class DetalleCompraLogic{
         }
         return $lista;
     }
-     public static function insertarDetalleCompra($compraId, $productoId, $precioCompra, $cantidad, $subtotal){
+    public static function mostrarTodoCompleto($compras){
+        //$compras = self::getAll();
+        $lista = array();
+        foreach($compras as $compra){
+            $productoId = $compra->getProductoId();
+            $producto = ProductoLogic::getProductoPorId($productoId);
+            $um=  UnidadMedidaLogic::getUnidadMedidaPorId($producto->getUnidadMedida())->getNombre();
+
+            $lista[] = array($compra,$producto,$um);
+        }
+        return $lista;
+
+    }
+    public static function insertarDetalleCompra($compraId, $productoId, $precioCompra, $cantidad, $subtotal){
         $detalleCompra = new DetalleCompra(null, $compraId, $productoId, $precioCompra, $cantidad, $subtotal);
         return $detalleCompra->insertar();
     }

@@ -56,13 +56,16 @@ abstract class VentasView {
                                     break;
                                 case 'Buscar':
                                     $condicion = $_POST['condicion'];
+                                    $encontrados=null;
                                     switch ($condicion) {
                                         case 0:
                                             if (isset($_POST['marca'])) {
-                                                $encontrados = ProductoLogic::getProductoPorMarca($_POST['marca']);
+                                                $encontrados = ProductoLogic::getProductoPorMarcaCategoria($_POST['marca']);
+                                                
                                                 
                                             } else {
                                                 $encontrados = ProductoLogic::getProductoPorCategoria($_POST['categoria']);
+                                                
                                             }
                                             break;
                                         case 1:
@@ -117,7 +120,7 @@ abstract class VentasView {
                                     //echo var_dum$venta);p(
                                     $detalleVentas=$_SESSION['carritoVenta'];
                                     foreach ($detalleVentas as $value) {
-                                        DetalleVentaLogic::insertar($venta[0]->getVentaId(), $value[0]->getProductoId(), $value[0]->getPrecioVenta(), $value[1]);
+                                        DetalleVentaLogic::insertar($venta, $value[0]->getProductoId(), $value[0]->getPrecioVenta(), $value[1]);
 
                                     }
                                     $_SESSION['clienteSel']= '';

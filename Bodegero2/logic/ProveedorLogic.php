@@ -15,24 +15,67 @@ abstract class ProveedorLogic {
         }
         return null;
     }
-    public static  function getProveedorPorNombre($nombre){
-        $todos=self::getAll();
-        $encontrados=array();
-        foreach ($todos as $value) {
-            if(preg_match("/$nombre/", PersonaJuridicaLogic::buscarPersonaJuridicaPorId($value->getPersonaId())->getRazonSocial())){
-                        $encontrados[]= $value;
+     public static  function getProveedorPorPersonaId($id){
+        $todos = self::getAll();
+        foreach($todos as $value){
+            if ($value->getPersonaId()==$id) {
+                return $value;
             }
         }
-        return $encontrados;
+        return null;
     }
-    public static function mostrarTodoCompleto(){
-        $lista = array();
-        $proveedores = self::getAll();
+    public static  function getProveedorPorNombre($nombre){
+       $todos=self::getAll();
+       $pj=PersonaJuridicaLogic::getPersonaJPorNombre($nombre);
+       $encontrados=array();
+            if ($pj!=null) {
+                foreach($pj as $p){
+                    if(self::getProveedorPorPersonaId($p->getPersonaId())!=null){
+                    $encontrados[]= self::getProveedorPorPersonaId($p->getPersonaId());
+                    
+                    }
+
+                }
+                if($encontrados!=null){
+                    return $encontrados;
+                }else{
+                    return null;
+                }
+            }else{
+                return null;
+            }
+    }
+     public static  function getProveedorPorRuc($ruc){
+        $pj=PersonaJuridicaLogic::getPersonaJPorRuc($ruc);
+            if ($pj!=null) {
+                $encontrado= self::getProveedorPorPersonaId($pj[0]->getPersonaId());
+                if($encontrado!=null){
+                    return array($encontrado);
+                }else{
+                    return null;
+                }
+            }else{
+                return null;
+            }
+    }
+    public static function mostrarTodoCompleto($proveedores){
+        $lista=array();
+        if($proveedores!=null){
         foreach($proveedores as $pro){
             $persona = PersonaJuridicaLogic::buscarPersonaJuridicaPorId($pro->getPersonaId());
-            $lista[] = array($pro,$persona->getRazonSocial());
+            $lista[] = array($pro,$persona);
         }
         return $lista;
+    }
+    }
+    public static function insertar(  $_telefono, $_correoElectronico, $_direccion, $_ruc, $_razonSocial){
+        $id=PersonaJuridicaLogic::insertar( $_telefono, $_correoElectronico, $_direccion, $_ruc, $_razonSocial);
+        if($id!=false){
+        $proveedor= new Proveedor(null, $id, $_SESSION['usuario']);
+        return $proveedor->insertar();
+        }else{
+            return FALSE;
+        }
     }
 }
 ?>

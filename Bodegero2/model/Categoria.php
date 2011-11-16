@@ -61,7 +61,7 @@ class Categoria implements InterfaceModelsUsuario{
         $sql->addValues($this->_nombre);
         $sql->addValues($this->_descripcion);
         $sql->addValues($this->_usuarioId);
-        Persistence::consultar($sql, 0);
+        return Persistence::consultar($sql, 0);
     }
     public function actualizar(){
          $sql = new SQL();
@@ -69,6 +69,7 @@ class Categoria implements InterfaceModelsUsuario{
         $sql->addTipo('actualizar');
         $sql->addValues("nombre = '$this->_nombre'");
         $sql->addValues("descripcion='$this->_descripcion'");
+        $sql->addWhere("categoriaId='$this->_categoriaId'");
         Persistence::consultar($sql, 0);
     }
     public function listarPorUsuario() {

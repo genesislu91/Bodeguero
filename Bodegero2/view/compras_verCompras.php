@@ -22,8 +22,8 @@
                     <div id="bloque_derecho">
                         <select name="proveedor">
                             <option selected value="ninguno">Proveedor</option>
-                            <?php foreach (ProveedorLogic::getAll() as $proveedor): ?>
-                                <option value="<?php echo $proveedor->getProveedorId() ?>"><?php echo PersonaJuridicaLogic::buscarPersonaJuridicaPorId($proveedor->getPersonaId())->getRazonSocial(); ?></option>
+                            <?php foreach ($proveedores as $proveedor): ?>
+                                <option value="<?php echo $proveedor[0]->getProveedorId() ?>"><?php echo $proveedor[1]->getRazonSocial();; ?></option>
                             <?php endforeach ?>
                         </select><br/>
                     </div>
@@ -45,7 +45,6 @@
             <caption>Resultado de la Búsqueda</caption>
             <thead>
                 <tr>
-                    <th>Código</th>
                     <th>Fecha</th>
                     <th>Proveedor</th>
                     <th>Monto Total (S/.)</th>
@@ -53,13 +52,13 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($compras as $compra): ?>
+                <?php 
+                foreach ($compras as $compra): ?>
                     <tr>
-                        <td><?php echo $compra->getCompraId(); ?></td>
-                        <td><?php echo $compra->getFechaCompra(); ?></td>
-                        <td><?php echo PersonaJuridicaLogic::buscarPersonaJuridicaPorId((ProveedorLogic::getProveedorPorId($compra->getProveedorId())->getPersonaId()))->getRazonSocial(); ?></td>
-                        <td><?php echo $compra->getMontoTotal(); ?></td>
-                            <td><a href="ComprasView.php?opcion=ver_detalle_compra&compra_id=<?php echo $compra->getCompraId(); ?>">Ver Detalle</a></td>
+                        <td><?php echo $compra[0]->getFechaCompra(); ?></td>
+                        <td><?php echo $compra[1]->getRazonSocial(); ?></td>
+                        <td><?php echo $compra[0]->getMontoTotal(); ?></td>
+                        <td><a href="ComprasView.php?opcion=ver_detalle_compra&compra_id=<?php echo $compra[0]->getCompraId(); ?>">Ver Detalle</a></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

@@ -61,7 +61,7 @@ class Usuario implements InterfaceModels{
         $sql->addValues($this->_contrasenia);
         $sql->addValues($this->_fechaRegistro);
         $sql->addValues($this->_personaId);
-        Persistence::consultar($sql, 0);
+        return Persistence::consultar($sql, 0);
     }
     public function actualizar(){}
 }

@@ -10,6 +10,13 @@ abstract class PersonaLogic{
         }
         return false;
     }
+     public function actualizar($id,$telefono,$correo,$direccion){
+        $persona=self::buscarPersonaJuridicaPorId($id);
+        $persona->setTelefono($telefono);
+        $persona->setCorreoElectronico($correo);
+        $persona->setDireccion($direccion);
+        $persona->actualizar();
+    }
     public static function obtenerIdValido(){
         $id = 1;
         $encontrado = FALSE;

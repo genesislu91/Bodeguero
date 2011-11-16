@@ -70,7 +70,7 @@ class PersonaNatural extends Persona{
         $sql->addValues($this->_apellidoPaterno);
         $sql->addValues($this->_apellidoMaterno);
         $sql->addValues($this->_dni);
-        Persistence::consultar($sql, 0);
+       return Persistence::consultar($sql, 0);
     }
 }
 ?>

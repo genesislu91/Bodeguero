@@ -1,8 +1,7 @@
 <?php
 require_once '../conexion/SQL.php';
 require_once '../conexion/Persistence.php';
-require_once '../interface/InterfaceModels.php';
-class UnidadMedida implements InterfaceModels{
+class UnidadMedida {
   private $_unidadMedidaId;
   private $_nombre;
   function __construct($_unidadMedidaId="", $_nombre="") {
@@ -34,15 +33,7 @@ public function traerDatos(){
         }
         return $lista;
     }
-     public function insertar(){
-         $sql = new SQL();
-        $sql->addTable("categoria (categoriaId,	nombre,	descripcion)");
-        $sql->addTipo('insertar');
-        $sql->addValues($this->_categoriaId);
-        $sql->addValues($this->_nombre);
-        $sql->addValues($this->_descripcion);
-        Persistence::consultar($sql, 0);
-    }
+     
 
 
 }

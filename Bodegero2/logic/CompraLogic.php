@@ -7,8 +7,8 @@ abstract class CompraLogic{
         return $compra->listarPorUsuario();
     }
     
-    public static function mostrarTodoCompleto(){
-        $compras = self::getAll();
+    public static function mostrarTodoCompleto($compras){
+        //$compras = self::getAll();
         $lista = array();
         foreach($compras as $compra){
             $proveedorId = $compra->getProveedorId();

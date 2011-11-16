@@ -105,7 +105,7 @@
                                     <tr>
                                         <td><?php echo $p[0]->getProductoId(); ?></td>
                                         <td><?php echo $p[0]->getNombre(); ?></td>
-                                        <td><?php echo $p[1]->getRazonSocial(); ?></td>
+                                        <td><?php echo $p[1]; ?></td>
                                         <td><a href="?boton=seleccionarP&id=<?php echo $p[0]->getProductoId(); ?>">seleccionar</a></td>
                                     </tr>
                                 <?php } ?>

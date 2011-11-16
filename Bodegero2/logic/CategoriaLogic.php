@@ -29,7 +29,7 @@ abstract class CategoriaLogic{
     }
       public static function insertarCategoria( $_nombre, $_descripcion) {
         $categoria = new Categoria(self::obtenerIdValido(), $_nombre, $_descripcion, $_SESSION['usuario']);
-        $categoria->insertar();
+        return $categoria->insertar();
     }
 
     public static function editarCategoria($categoriaId,$nombre, $descripcion) {

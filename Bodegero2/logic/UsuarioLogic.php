@@ -18,9 +18,9 @@ abstract class UsuarioLogic{
 
     }
     public static function insertar( $_nombreUsuario, $_contrasenia, $_fechaRegistro, $_personaId){
-        $id=  self::obtenerIdValido();
-        $us= new Usuario($id, $_nombreUsuario, $_contrasenia, $_fechaRegistro, $_personaId);
-        $us->insertar();
+        $id=  null;
+        $us= new Usuario(null, $_nombreUsuario, $_contrasenia, $_fechaRegistro, $_personaId);
+        return $us->insertar();
     }
     public static function obtenerUsuarioPorId($id){
         $todos=self::getAll();

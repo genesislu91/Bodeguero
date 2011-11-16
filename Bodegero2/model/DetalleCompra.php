@@ -35,7 +35,15 @@ class DetalleCompra implements InterfaceModels{
     public function getSubtotal(){
         return $this->_subtotal;
     }
-    public function traerDatos(){
+    public function setCantidad($_cantidad) {
+        $this->_cantidad = $_cantidad;
+    }
+    public function setSubtotal($_subtotal) {
+        $this->_subtotal = $_subtotal;
+    }
+
+
+        public function traerDatos(){
         $sql = new SQL();
         $sql->addTable('detallecompra');
         $sql->addTipo('consultar');

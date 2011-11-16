@@ -16,10 +16,10 @@
             <legend>Detalle de Compra</legend>
             <div id="bloque_centrado">
                 <div id="bloque_izquierdo">
-                    <p>Proveedor: <?php echo PersonaJuridicaLogic::buscarPersonaJuridicaPorId(ProveedorLogic::getProveedorPorId(CompraLogic::getCompraPorId($_GET['compra_id'])->getProveedorId())->getPersonaId())->getRazonSocial(); ?></p>
+                    <p>Proveedor: <?php echo $proveedor; ?></p>
                 </div>
                 <div id="bloque_derecho">
-                    <p>Fecha de Compra (año-mes-día): <?php echo CompraLogic::getCompraPorId($_GET['compra_id'])->getFechaCompra(); ?></p>
+                    <p>Fecha de Compra (año-mes-día): <?php echo $fechaCompra; ?></p>
                 </div>
             </div>
             <table>
@@ -27,10 +27,8 @@
                 <thead>
                     <tr>
                         <th>Producto</th>
-                        <th>Categoría</th>
                         <th>Cantidad</th>
                         <th>Unidad de Medida</th>
-                        <th>Precio de Lista Unitario (S/.)</th>
                         <th>Precio de Compra Unitario (S/.)</th>
                         <th>Sub Total (S/.)</th>
                     </tr>
@@ -38,19 +36,17 @@
                 <tbody>
                     <?php foreach ($detallesCompra as $detalleCompra): ?>
                         <tr>
-                            <td><?php echo ProductoLogic::getProductoPorId($detalleCompra->getProductoId())->getNombre(); ?></td>
-                            <td><?php echo CategoriaLogic::getCategoriaPorId((MarcaCategoriaLogic::buscarMarcasCategoriaPorId((ProductoLogic::getProductoPorId($detalleCompra->getProductoId())->getMarcaCategoriaId()))->getCategoria()))->getNombre(); ?></td>
-                            <td><?php echo $detalleCompra->getCantidad(); ?></td>
-                            <td><?php echo UnidadMedidaLogic::getUnidadMedidaPorId(ProductoLogic::getProductoPorId($detalleCompra->getProductoId())->getUnidadMedida())->getNombre(); ?></td>
-                            <td><?php echo ProductoLogic::getProductoPorId($detalleCompra->getProductoId())->getPrecioCompra(); ?></td>
-                            <td><?php echo $detalleCompra->getPrecioCompra(); ?></td>
-                            <td><?php echo $detalleCompra->getSubTotal(); ?></td>
+                            <td><?php echo $detalleCompra[1]->getNombre(); ?></td>
+                            <td><?php echo $detalleCompra[0]->getCantidad(); ?></td>
+                            <td><?php echo $detalleCompra[2]; ?></td>
+                            <td><?php echo $detalleCompra[1]->getPrecioCompra(); ?></td>
+                            <td><?php echo $detalleCompra[0]->getSubTotal(); ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
             <div id="bloque_izquierdo">
-                <p>Total: <?php echo CompraLogic::getCompraPorId($_GET['compra_id'])->getMontoTotal(); ?> Soles</p>
+                <p>Total: <?php echo $montoTotal; ?> Soles</p>
                 <a href="?opcion=ver_compras">Volver</a>
             </div>
         </fieldset>

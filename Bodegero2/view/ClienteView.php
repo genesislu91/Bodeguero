@@ -39,8 +39,7 @@ abstract class ClienteView{
                     break;
                 case 'modificando':
                     $id = $_POST['id'];
-                    $cliente = ClienteLogic::buscarClientePorId($id);
-                    $tipoCliente = $cliente[0]->getTipo();
+                    $tipoCliente = $_POST['tipo'];
                     $direccion;
                     if (isset($_POST['direccion'])) {
                         $direccion = $_POST['direccion'];
@@ -53,26 +52,12 @@ abstract class ClienteView{
                     if (isset($_POST['correo'])) {
                         $correoElectronico = $_POST['correo'];
                     }
-                    $nombre;
-                    if (isset($_POST['nombre'])) {
-                        $nombre = $_POST['nombre'];
-                    }
-                    $documento;
-                    if (isset($_POST['documento'])) {
-                        $documento = $_POST['documento'];
-                    }
-                    if ($tipoCliente == 2) {
-                        $apellidoP;
-                        if (isset($_POST['apellidoP'])) {
-                            $apellidoP = $_POST['apellidoP'];
-                        }
-                        $apellidoM;
-                        if (isset($_POST['apellidoM'])) {
-                            $apellidoM = $_POST['apellidoM'];
-                        }
-                        ClienteLogic::modificarClienteN($id, $nombre, $apellidoP, $apellidoM, $documento, $direccion, $telefono, $correoElectronico);
+                    if ($tipoCliente == 1) {
+                        PersonaJuridicaLogic::actualizar($id, $telefono, $correoElectronico, $direccion);
+                        //ClienteLogic::modificarClienteN($id, $nombre, $apellidoP, $apellidoM, $documento, $direccion, $telefono, $correoElectronico);
                     }else{
-                        ClienteLogic::modificarClienteJ($id, $nombre, $documento, $direccion, $telefono, $correoElectronico);
+                        PersonaNaturalLogic::actualizar($id, $telefono, $correoElectronico, $direccion);
+                        //ClienteLogic::modificarClienteJ($id, $nombre, $documento, $direccion, $telefono, $correoElectronico);
                     }
                     $clientes = ClienteLogic::mostrarClientesCompleto();
                     self::_mostrarVerClientes($clientes, self::$_opcionesMenuLateral);

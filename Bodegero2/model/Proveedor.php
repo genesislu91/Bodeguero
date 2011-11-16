@@ -58,12 +58,12 @@ class Proveedor implements InterfaceModelsUsuario{
     }
      public function insertar(){
          $sql = new SQL();
-        $sql->addTable("proveedor (proveedorId 	personaJuridicaId , usuarioId)");
+        $sql->addTable("proveedor (proveedorId ,personaJuridicaId , usuarioId)");
         $sql->addTipo('insertar');
         $sql->addValues($this->_proveedorId);
         $sql->addValues($this->_personaId);
         $sql->addValues($this->_usuarioId);
-        Persistence::consultar($sql, 0);
+        return Persistence::consultar($sql, 0);
     }
     
 }

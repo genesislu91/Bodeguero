@@ -48,13 +48,14 @@ abstract class VentaLogic{
         }
     }
     public static function insertar($_montoTotal, $_fechaVenta, $cliente){
-        $id=self::obtenerIdValido();
+        
         $venta = new Venta($id, $_montoTotal, $_fechaVenta, $cliente, $_SESSION['usuario']);
-        $venta->insertar();
-        return self::getVentasPorId($id);
+        return $venta->insertar();
+        
     }
      public static function mostrarTodoCompleto($ventas){
         $lista = array();
+        if($ventas !=null){
         foreach($ventas as $venta){
             $clienteId = $venta->getCliente();
             $cliente = ClienteLogic::buscarClientePorId($clienteId);
@@ -63,6 +64,10 @@ abstract class VentaLogic{
             $lista[] = array($venta,$persona,$cliente[0]->getTipo());
         }
         return $lista;
+    }else{
+        return null;
+    }
+    
     }
     
 }

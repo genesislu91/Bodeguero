@@ -27,10 +27,13 @@ class PersonaJuridica extends Persona{
             $sql->addTipo('consultar');
             $sql->addWhere("personaId = $_personaId");
             $persona = Persistence::consultar($sql,1);
+            if($persona!=null){
             $_telefono = $persona[0]['telefono'];
             $_correoElectronico = $persona[0]['correoElectronico'];
             $_direccion = $persona[0]['direccion'];
             $lista[]= new PersonaJuridica($_personaId, $_telefono, $_correoElectronico, $_direccion, $_ruc, $_razonSocial);
+            
+            }
         }
         return $lista;
     }
@@ -42,14 +45,16 @@ class PersonaJuridica extends Persona{
         $sql->addValues($this->getTelefono());
         $sql->addValues($this->getCorreoElectronico());
         $sql->addValues($this->getDireccion());
-        Persistence::consultar($sql, 0);
+        $id=Persistence::consultar($sql, 0);
         $sql = new SQL();
         $sql->addTable("personajuridica (personaJuridicaId ,razonSocial ,ruc)");
         $sql->addTipo('insertar');
-        $sql->addValues($this->getPersonaId());
+        $sql->addValues($id);
         $sql->addValues($this->_razonSocial);
         $sql->addValues($this->_ruc);
-        Persistence::consultar($sql, 0);
+        $nid=Persistence::consultar($sql, 0);
+        
+        return $nid;
     }
     
 }

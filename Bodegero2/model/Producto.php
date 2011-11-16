@@ -165,7 +165,7 @@ class Producto implements InterfaceModelsUsuario{
         $sql->addValues("marcaCategoriaId = '$this->_marcaCategoriaId'");
         $sql->addValues("proveedorId='$this->_proveedorId'");
         $sql->addWhere("productoId='$this->_productoId'");
-        Persistence::consultar($sql, 0);
+        return Persistence::consultar($sql, 0);
     }
 
 }

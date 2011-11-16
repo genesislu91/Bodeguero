@@ -77,22 +77,16 @@ abstract class ClienteLogic{
         }
     }
     public static function  insertarClienteN($nombre,$apellidoPaterno,$apellidoMaterno,$dni,$direccion,$telefono,$correoElectronico){
-        $clienteId = self::obtenerIdValido();
-        $personaId = PersonaNaturalLogic::insertar($nombre,$apellidoPaterno,$apellidoMaterno,$dni,$correoElectronico,$telefono,$direccion);
-        $cliente = new Cliente($clienteId,date('Y-m-d'),$personaId,0,$_SESSION['usuario']);
-        $cliente->insertar();
-    }
-    public static function modificarClienteN($id,$nombre,$apellidoP,$apellidoM,$dni,$direccion,$telefono,$correoElectronico){
         
+        $personaId = PersonaNaturalLogic::insertar($nombre,$apellidoPaterno,$apellidoMaterno,$dni,$correoElectronico,$telefono,$direccion);
+        $cliente = new Cliente(null,date('Y-m-d'),$personaId,0,$_SESSION['usuario']);
+        return $cliente->insertar();
     }
     public static function insertarClienteJ($razonSocial,$ruc,$direccion,$telefono,$correoElectronico){
-        $clienteId = self::obtenerIdValido();
+       
         $personaId = PersonaJuridicaLogic::insertar($telefono, $correoElectronico, $direccion, $ruc, $razonSocial);
-        $cliente = new Cliente($clienteId,date('Y-m-d'),$personaId,0,$_SESSION['usuario']);
-        $cliente->insertar();
-    }
-    public static function modificarClienteJ($id,$razonSocial,$ruc,$direccion,$telefono,$correoElectronico){
-        
+        $cliente = new Cliente(null,date('Y-m-d'),$personaId,0,$_SESSION['usuario']);
+        return $cliente->insertar();
     }
     public static function mostrarClientesCompleto(){
         $lista = array();
@@ -108,8 +102,6 @@ abstract class ClienteLogic{
     public static function mostrarClientesCompletoPorNombre($nombre,$tipo){
         $lista = array();
         $clientes = self::getClientePorNombre($nombre, $tipo);
-        
-        
         foreach($clientes as $cliente){
             $personaId = $cliente->getPersonaId();
             $tipo = $tipo;

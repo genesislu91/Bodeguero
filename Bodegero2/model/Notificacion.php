@@ -74,7 +74,7 @@ public function traerDatos(){
         $sql->addValues($this->_descripcion);
         $sql->addValues($this->_fecha);
         $sql->addValues($this->_usuarioId);
-        Persistence::consultar($sql, 0);
+        return Persistence::consultar($sql, 0);
     }
 
 

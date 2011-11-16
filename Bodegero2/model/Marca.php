@@ -62,7 +62,7 @@ class Marca implements InterfaceModelsUsuario{
         $sql->addValues($this->_marcaId);
         $sql->addValues($this->_nombre);
         $sql->addValues($this->_usuarioId);
-        Persistence::consultar($sql, 0);
+       return Persistence::consultar($sql, 0);
     }
     public function actualizar(){}
     public function eliminar($id){}

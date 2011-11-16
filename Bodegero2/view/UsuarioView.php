@@ -63,16 +63,31 @@ abstract class UsuarioView {
                     $u = UsuarioLogic::obtenerUsuarioPorId($_SESSION['usuario']);
                     $pid = $u->getPersonaId();
                     $pj = PersonaJuridicaLogic::buscarPersonaJuridicaPorId($pid);
-                    self::_modificarInformacion($pj, self::$opcionesMenuLateral);
-                    if ($_GET['opcion'] != null) {
-                        $correo = $_POST['correo'];
-                        $direccion = $_POST['direccion'];
-                        $empresa = $_POST['empresa'];
-                        $ruc = $_POST['ruc'];
-                        $telefono = $_POST['telefono'];
-                    }
+                    self::_modificarInformacion($pj,null, self::$opcionesMenuLateral);
                     }
                     break;
+                  case 'cambioPerfil':
+                    if (isset ($_SESSION['usuario'])) {
+                    include("../securimage/securimage.php");
+                   $img = new Securimage();
+                    $valid = $img->check($_POST['code']);
+                    if ($valid == false) {
+                        $u = UsuarioLogic::ObtenerUsuarioPorId($_SESSION['usuario']);
+                        $pid = $u->getPersonaId();
+                        $pj = PersonaJuridicaLogic::buscarPersonaJuridicaPorId($pid);
+                        self::_modificarInformacion($pj,'el codigo de seguridad es incorrecto' ,  self::$opcionesMenuLateral);
+
+                    }else{
+                        $u = UsuarioLogic::ObtenerUsuarioPorId($_SESSION['usuario']);
+                        $pid = $u->getPersonaId();
+                        $correo = $_POST['correo'];
+                        $direccion = $_POST['direccion'];
+                        $telefono = $_POST['telefono'];
+                        $pj = PersonaJuridicaLogic::actualizar($pid, $telefono, $correo, $direccion);
+                        self::_mostrarInformacion(PersonaJuridicaLogic::buscarPersonaJuridicaPorId($pid), self::$opcionesMenuLateral);
+                    }
+                        }
+                        break;
                 case 'registrar':
                     include("../securimage/securimage.php");
                     $img = new Securimage();
@@ -123,7 +138,7 @@ abstract class UsuarioView {
         require_once 'usuario_miInformacion.php';
     }
 
-    public static function _modificarInformacion($pj,$opcionesMenuLateral){
+    public static function _modificarInformacion($pj,$mensaje,$opcionesMenuLateral){
         require_once 'usuario_modificarInformacion.php';
     }
 

@@ -14,6 +14,17 @@ abstract class MarcaLogic{
         }
         return null;
     }
+    public static function getNombreMarcas($marcas){
+        $lista= array();
+        foreach ($marcas as $m){
+            $lista[]=self::getMarcaPorId($m);
+        }
+        return $lista;
+    }
+    public static function insertar($marca){
+        $marca= new Marca(null, $marca, $_SESSION['usuario']);
+        return $marca->insertar();
+    }
    
 }
 ?>

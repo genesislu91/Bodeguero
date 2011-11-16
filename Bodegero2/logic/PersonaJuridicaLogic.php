@@ -25,7 +25,7 @@ abstract class PersonaJuridicaLogic {
         }
         return $encontrados;
     }
-      public static  function getPersonaJPorRuc($ruc){
+    public static  function getPersonaJPorRuc($ruc){
         $todos=self::getAll();
         foreach ($todos as $value) {
             if($value->getRuc()==$ruc){
@@ -33,23 +33,29 @@ abstract class PersonaJuridicaLogic {
             }
         }
         return null;
-
     }
-   
-   
-     public static function validarUsuario($ruc){
+    public static  function actualizar($id,$telefono,$correo,$direccion){
+        $persona=self::buscarPersonaJuridicaPorId($id);
+        $persona->setTelefono($telefono);
+        $persona->setCorreoElectronico($correo);
+        $persona->setDireccion($direccion);
+        $persona->actualizar();
+    }
+    public static function validarUsuario($ruc){
         if(self::getPersonaJPorRuc($ruc)==null ){
             return true;
         }else{
             return false;
         }
     }
-    
     public static function insertar( $_telefono, $_correoElectronico, $_direccion, $_ruc, $_razonSocial){
-        $id=PersonaLogic::obtenerIdValido();
-        $p=new PersonaJuridica($id, $_telefono, $_correoElectronico, $_direccion, $_ruc, $_razonSocial);
-        $p->insertar();
-        return $id;
+        if(self::validarUsuario($_ruc)){
+            $p=new PersonaJuridica(null, $_telefono, $_correoElectronico, $_direccion, $_ruc, $_razonSocial);
+            
+            return $p->insertar();;
+        }else{
+            return false;
+        }
     }
 }
 ?>

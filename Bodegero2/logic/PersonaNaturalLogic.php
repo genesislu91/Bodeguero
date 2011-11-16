@@ -24,6 +24,13 @@ abstract class PersonaNaturalLogic {
         }
         return null;
     }
+     public static function validarUsuario($dni){
+        if(self::getPersonaNPorDni($dni)==null ){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public static function buscarPersonaNaturalPorId($id){
      $todos=self::getAll();
         foreach($todos as $p){
@@ -34,11 +41,20 @@ abstract class PersonaNaturalLogic {
         return null;
    }
    public static function insertar($nombre,$apellidoPaterno,$apellidoMaterno,$dni,$correoElectronico,$telefono,$direccion){
-       $personaId = PersonaLogic::obtenerIdValido();
-       $personaNatural = new PersonaNatural($personaId,$telefono,$correoElectronico,$direccion,$nombre,$apellidoPaterno,$apellidoMaterno,$dni);
-       $personaNatural->insertar();
-       return $personaId;
+       if(self::validarUsuario($dni)){
+           $personaNatural = new PersonaNatural(null,$telefono,$correoElectronico,$direccion,$nombre,$apellidoPaterno,$apellidoMaterno,$dni);
+           return $personaNatural->insertar();
+       }else{
+           return false;
+       }
    }
+   public static  function actualizar($id,$telefono,$correo,$direccion){
+         $persona=self::buscarPersonaNaturalPorId($id);
+        $persona->setTelefono($telefono);
+        $persona->setCorreoElectronico($correo);
+        $persona->setDireccion($direccion);
+        $persona->actualizar();
+    }
   
 }
 ?>

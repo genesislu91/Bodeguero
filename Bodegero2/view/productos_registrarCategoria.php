@@ -7,11 +7,12 @@
             foreach ($opcionesMenuLateral as $opcionMenuLateral) {
                 echo $opcionMenuLateral;
             }
-            ?>	
+            ?>
         </ul>
     </div>
     <div id="contenido">
-
+        <fieldset>
+            <legend>Registrar Categoria</legend>
         <form method="POST" action="?opcion=ingresarCategoria">
             <table width="100%">
                 <tr>
@@ -27,31 +28,38 @@
                 </tr>
                 <tr>
                     <td >Subcategorias:</td>
-                    <td><input type="text" name="marca"/><input type="submit" name="boton" value="agregar"/></td>
+                    <td><select name="marca">
+                            <?php foreach ($marcas as $m){ ?>
+                            <option value="<?php echo $m->getMarcaId();?>"><?php echo $m->getNombre();?></option>
+                            <?php } ?>
+                        </select>
+                        <input type="submit" name="boton" value="agregar"/></td>
                 </tr>
             </table>
 
             <?php if ($listaSubCategoria != null) {
-                $i = 0; ?>
-                <table>
+                 ?>
+            <table id="bloque_centrado">
                     <thead>
                         <tr>
-                            <th>Marcas</th>
+                            <th >Marcas</th>
+                             <th >Opción</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($listaSubCategoria as $c) { ?>
                             <tr>
-                                <td><?php echo $c ?></td>
-                                <td><a href="?opcion=ingresarCategoria&boton=eliminar&marca=<?php echo $i; ?>">Eliminar</a></td>
-                                <?php $i++; ?>
+                                <td><?php echo $c->getNombre(); ?></td>
+                                <td><a href="?opcion=ingresarCategoria&boton=eliminar&marca=<?php echo $c->getMarcaId(); ?>">Eliminar</a></td>
+                                
                             </tr>
                         <?php } ?>
                     </tbody>
                 </table>
             <?php } ?>
-            <input type="submit" value="Agregar categoria" />
+            <input type="submit" name="boton" value="Agregar categoria" />
         </form>
+        </fieldset>
     </div>
 </div>
 <!-- ####################################################################################################### -->

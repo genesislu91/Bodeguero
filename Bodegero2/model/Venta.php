@@ -80,7 +80,7 @@ class Venta implements InterfaceModelsUsuario{
         $sql->addValues($this->_cliente);
         $sql->addValues($this->_usuarioId);
         //echo $sql;
-        Persistence::consultar($sql, 0);
+         return Persistence::consultar($sql, 0);
     }
 }
 ?>

@@ -50,7 +50,7 @@ abstract class DetalleVentaLogic{
     }
     public static function insertar($_ventaId , $_productoId, $_precioVenta, $_cantidad){
         $_subtotal=$_precioVenta*$_cantidad;
-        $dv= new DetalleVenta(self::obtenerIdValido(),$_ventaId , $_productoId, $_precioVenta, $_cantidad, $_subtotal);
+        $dv= new DetalleVenta(null,$_ventaId , $_productoId, $_precioVenta, $_cantidad, $_subtotal);
         $dv->insertar();
         ProductoLogic::actualizarStock($_productoId, -$_cantidad);
     }

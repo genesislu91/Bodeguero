@@ -52,7 +52,8 @@ class MarcaCategoria implements InterfaceModels{
         $sql=new SQL();
         $sql->addTipo('eliminar');
         $sql->addTable('marcacategoria');
-        $sql->addWhere("marcaCategoriaId = $this->_marcaCategoriaId");;
+        $sql->addWhere("marcaCategoriaId = $this->_marcaCategoriaId");
+        return Persistence::consultar($sql, 0);
     }
 }
 ?>

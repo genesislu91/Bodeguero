@@ -7,7 +7,7 @@
             foreach ($opcionesMenuLateral as $opcionMenuLateral) {
                 echo $opcionMenuLateral;
             }
-            ?>	
+            ?>
         </ul>
     </div>
     <div id="contenido">
@@ -31,7 +31,7 @@
                     <td> <?php if (isset($marcas) & $marcas != null) { ?>
                             <select name="marca">
                                 <?php foreach ($marcas as $m) { ?>
-                                    <option value="<?php echo $m->getMarcaId(); ?>"><?php echo $m->getNombre(); ?></option>
+                                    <option value="<?php echo $m[0]; ?>"><?php echo $m[1]->getNombre(); ?></option>
                                 <?php } ?></select><?php } ?></td>
 
                 </tr>
@@ -56,23 +56,25 @@
                                 <tr>
                                         <th>Nombre</th>
                                         <th>Proveedor</th>
+                                        <th>Cantidad</th>
                                         <th>Categoria</th>
                                         <th>Precio(S/.)</th>
                                         <th>Unidad de medidad</th>
                                         <th>Descripcion</th>
                                         <th>Opcion</th>
                                     </tr>
-                                
-                    
+
+
                     <?php foreach ($listaProducto as $producto) { ?>
                         <tr>
-                            <td><?php echo $producto->getNombre(); ?></td>
-                            <td><?php echo $producto->getProveedorId(); ?></td>
-                            <td><?php echo $producto->getCantidad(); ?></td>
-                            <td><?php echo $producto->getPrecioVenta(); ?></td>
-                            <td><?php echo $producto->getUnidadMedida(); ?></td>
-                            <td><?php echo $producto->getDescripcion(); ?></td>
-                            <td><a href="?opcion=verProducto&boton=ModificarP&id=<?php echo $producto->getProductoId(); ?>">ModificarProducto</a></td>
+                            <td><?php echo $producto[0]->getNombre(); ?></td>
+                            <td><?php echo $producto[1] ?></td>
+                            <td><?php echo $producto[0]->getCantidad(); ?></td>
+                            <td><?php echo $producto[2]; ?></td>
+                            <td><?php echo $producto[0]->getPrecioVenta(); ?></td>
+                            <td><?php echo $producto[3] ?></td>
+                            <td><?php echo $producto[0]->getDescripcion(); ?></td>
+                            <td><a href="?opcion=verProducto&boton=ModificarP&id=<?php echo $producto[0]->getProductoId(); ?>">ModificarProducto</a></td>
                         </tr>
                     <?php }
                 } ?>
@@ -83,7 +85,7 @@
         </form>
 
 
-        
+
     </div>
 </div>
 <!-- ####################################################################################################### -->

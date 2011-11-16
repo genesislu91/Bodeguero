@@ -12,8 +12,7 @@
             </div>
             <div id="notificaciones">
                 <p>Bienvenido,<?php require_once '../logic/UsuarioLogic.php';$usuario=$_SESSION['usuario'];echo UsuarioLogic::obtenerUsuarioPorId($usuario)->getNombreUsuario(); ?><br/>
-                    <a href="#">Tienes X notificaciones nuevas.</a><br/>
-                    <a href="UsuarioView.php?opcion=cerrarSesion">Cerrar Sesion</a>
+                       <a href="UsuarioView.php?opcion=cerrarSesion">Cerrar Sesion</a>
                 </p>
             </div>
             <div id="menu_navegacion">

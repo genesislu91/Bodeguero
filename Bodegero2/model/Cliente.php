@@ -69,7 +69,7 @@ class Cliente implements  InterfaceModelsUsuario{
         $sql->addValues($this->_fechaRegistro);
         $sql->addValues($this->_personaId);
         $sql->addValues($this->_usuarioId);
-        Persistence::consultar($sql, 0);
+        return Persistence::consultar($sql, 0);
     }
     public function listarPorUsuario() {
         $sql = new SQL();
