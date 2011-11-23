@@ -79,7 +79,7 @@ abstract class ClienteLogic{
     public static function  insertarClienteN($nombre,$apellidoPaterno,$apellidoMaterno,$dni,$direccion,$telefono,$correoElectronico){
         
         $personaId = PersonaNaturalLogic::insertar($nombre,$apellidoPaterno,$apellidoMaterno,$dni,$correoElectronico,$telefono,$direccion);
-        $cliente = new Cliente(null,date('Y-m-d'),$personaId,0,$_SESSION['usuario']);
+       $cliente = new Cliente(null,date('Y-m-d'),$personaId,0,$_SESSION['usuario']);
         return $cliente->insertar();
     }
     public static function insertarClienteJ($razonSocial,$ruc,$direccion,$telefono,$correoElectronico){

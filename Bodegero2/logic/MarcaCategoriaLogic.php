@@ -51,8 +51,11 @@ abstract class MarcaCategoriaLogic{
         return $encontrados;
     }
     public static function eliminarMarcaCategoria($id){
+        if(count(ProductoLogic::getProductoPorMarcaCategoria($id))==0){
         $mc= new MarcaCategoria($id);
-        $mc->eliminar();
+        $mc->eliminar();}else{
+            return false;
+        }
     }
 }
 ?>

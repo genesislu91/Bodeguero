@@ -1,5 +1,4 @@
 <?php
-
 require_once '../logic/CategoriaLogic.php';
 require_once '../logic/MarcaLogic.php';
 require_once '../logic/MarcaCategoriaLogic.php';
@@ -9,9 +8,7 @@ require_once '../logic/PersonaNaturalLogic.php';
 require_once '../logic/VentaLogic.php';
 require_once '../logic/DetalleVentaLogic.php';
 session_start();
-
 abstract class VentasView {
-
     private static $_opcionesMenuLateral = array(0 => '<li><a href="?opcion=ver">Ver Ventas</a></li>',
         1 => '<li><a href="?opcion=registrar">Registrar Ventas</a></li>');
 
@@ -120,13 +117,14 @@ abstract class VentasView {
                                     //echo var_dum$venta);p(
                                     $detalleVentas=$_SESSION['carritoVenta'];
                                     foreach ($detalleVentas as $value) {
-                                        DetalleVentaLogic::insertar($venta, $value[0]->getProductoId(), $value[0]->getPrecioVenta(), $value[1]);
+                                        DetalleVentaLogic::insertar($venta[0]->getVentaId(), $value[0]->getProductoId(), $value[0]->getPrecioVenta(), $value[1]);
 
                                     }
                                     $_SESSION['clienteSel']= '';
                                     $_SESSION['carritoVenta'] = null;
                                     $detallea = DetalleVentaLogic::getDetallePorVenta($venta[0]->getVentaId());
                                     $detalle=DetalleVentaLogic::mostrarTodoCompleto($detallea);
+                                    
                                     $cliente=ClienteLogic::buscarClientePorId($venta[0]->getCliente());
                                     self::_mostrarDetalleVenta($detalle, $cliente, $venta[0], self::$_opcionesMenuLateral);
                                     return;
@@ -180,7 +178,7 @@ abstract class VentasView {
                                     switch ($condicion) {
                                         case 0:
                                             if (isset($_POST['marca'])) {
-                                                $encontrados = ProductoLogic::getProductoPorMarca($_POST['marca']);
+                                                $encontrados = ProductoLogic::getProductoPorMarcaCategoria($_POST['marca']);
                                             } else {
                                                 $encontrados = ProductoLogic::getProductoPorCategoria($_POST['categoria']);
                                             }

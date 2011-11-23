@@ -5,9 +5,8 @@ abstract class CategoriaLogic{
         $categoria= new Categoria(null, null, null, $_SESSION['usuario']);
         return $categoria->listarPorUsuario();
     }
-
-     public static function getCategoriaPorId($id){
-        $todos=self::getAll();
+    public static function getCategoriaPorId($id){
+        $todos = self::getAll();
         foreach ($todos as $value) {
             if($value->getCategoriaId()==$id){
                 return $value;
@@ -27,11 +26,10 @@ abstract class CategoriaLogic{
         }
         return $id;
     }
-      public static function insertarCategoria( $_nombre, $_descripcion) {
+    public static function insertarCategoria( $_nombre, $_descripcion) {
         $categoria = new Categoria(self::obtenerIdValido(), $_nombre, $_descripcion, $_SESSION['usuario']);
         return $categoria->insertar();
     }
-
     public static function editarCategoria($categoriaId,$nombre, $descripcion) {
         $categoria = self::getCategoriaPorId($categoriaId);
         $categoria->setDescripcion($descripcion);

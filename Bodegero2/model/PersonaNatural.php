@@ -61,11 +61,11 @@ class PersonaNatural extends Persona{
         $sql->addValues($this->getTelefono());
         $sql->addValues($this->getCorreoElectronico());
         $sql->addValues($this->getDireccion());
-        Persistence::consultar($sql, 0);
+        $id=Persistence::consultar($sql, 0);
         $sql = new SQL();
         $sql->addTable("personanatural (personaNaturalId,nombre,apellidoPaterno,apellidoMaterno,dni)");
         $sql->addTipo('insertar');
-        $sql->addValues($this->getPersonaId());
+        $sql->addValues($id);
         $sql->addValues($this->_nombre);
         $sql->addValues($this->_apellidoPaterno);
         $sql->addValues($this->_apellidoMaterno);

@@ -23,7 +23,7 @@
                 </div>
             </div>
             <table>
-                <caption>Detalle de Compra</caption>
+                <caption>Detalle de Venta</caption>
                 <thead>
                     <tr>
                         <th>Código</th>

@@ -20,9 +20,12 @@ abstract class ProductoView {
         $listaProducto = ProductoLogic::MostrarProductosCompleto($listaProductoa);
         $listaProveedor = ProveedorLogic::getAll();
         $listaCategoria = CategoriaLogic::getAll();
+        
         $marcas = null;
-        if (!isset($_REQUEST['opcion'])) {
+        if (! isset($_REQUEST['opcion'])) {
+         
             self::_mostrarVerProductos($listaProducto, $listaProveedor, $listaCategoria, $marcas, self::$_opcionesMenuLateral);
+        
         } else {
             $opcion = $_REQUEST['opcion'];
             if (isset($_POST['bProductos'])) {
@@ -55,11 +58,13 @@ abstract class ProductoView {
                                 self::_mostrarVerProductos($listaProducto, $listaProveedor, $listaCategoria, $marcas, self::$_opcionesMenuLateral);
                             } elseif ($radio_value == 2) {
                                 $nombre = $_POST['nombre'];
-                                $listaProducto = ProductoLogic::getProductoPorNombre($nombre);
+                                $listaProductoa = ProductoLogic::getProductoPorNombre($nombre);
+                                $listaProducto= ProductoLogic::MostrarProductosCompleto($listaProductoa);
                                 self::_mostrarVerProductos($listaProducto, $listaProveedor, $listaCategoria, $marcas, self::$_opcionesMenuLateral);
                             } elseif ($radio_value == 3) {
                                 $proveedor = $_POST['proveedor'];
-                                $listaProducto = ProductoLogic::getProductoPorProveedor($proveedor);
+                                $listaProductoa = ProductoLogic::getProductoPorProveedor($proveedor);
+                                $listaProducto= ProductoLogic::MostrarProductosCompleto($listaProductoa);
                                 self::_mostrarVerProductos($listaProducto, $listaProveedor, $listaCategoria, $marcas, self::$_opcionesMenuLateral);
                             }
                             break;
@@ -95,32 +100,33 @@ abstract class ProductoView {
                                 foreach ($p as $pro) {
                                     $listaProveedor[] = array($pro, PersonaJuridicaLogic::buscarPersonaJuridicaPorId($pro->getPersonaId())->getRazonSocial());
                                 }
-                                self::_mostrarRegistrarProducto($listaProveedor, $listaCategoria, $marcas, $listaProveedor,$pselec,$um, self::$_opcionesMenuLateral);
+                                self::_mostrarRegistrarProducto($listaProveedor, $listaCategoria, $marcas, $listaProveedor,$pselec,$um,null, self::$_opcionesMenuLateral);
                                 break;
                             case 'seleccionar':
                                 $_SESSION['proveedor'] = ($_GET['id']);
                                 $pselec=ProveedorLogic::mostrarTodoCompleto(array(ProveedorLogic::getProveedorPorId($_SESSION['proveedor'])));
-                                self::_mostrarRegistrarProducto($listaProveedor, $listaCategoria, $marcas, null,$pselec,$um, self::$_opcionesMenuLateral);
+                                self::_mostrarRegistrarProducto($listaProveedor, $listaCategoria, $marcas, null,$pselec,$um,null, self::$_opcionesMenuLateral);
 
                                 break;
                             case 'ver Marcas':
                                 $marcas = MarcaCategoriaLogic::buscarMarcasPorCategoria($_POST['categoria']);
-                                self::_mostrarRegistrarProducto($listaProveedor, $listaCategoria, $marcas, null,$pselec,$um, self::$_opcionesMenuLateral);
+                                self::_mostrarRegistrarProducto($listaProveedor, $listaCategoria, $marcas, null,$pselec,$um,null, self::$_opcionesMenuLateral);
                                 break;
                             case 'registrar':
-                                if (isset($_POST['nombre']) & isset($_SESSION['proveedor']) & isset($_POST['precioCompra']) & isset($_POST['precioVenta'])) {
+                                if (isset($_POST['nombre']) & isset($_SESSION['proveedor']) & isset($_POST['precioCompra']) & isset($_POST['precioVenta']) & isset ($_POST['marca'])) {
+                                    
                                     ProductoLogic::insertarProducto($_POST['nombre'], $_POST['descripcion'], $_POST['precioVenta'], $_POST['precioCompra'], 0, $_POST['unidad'], $_POST['marca'],  $_SESSION['proveedor'],$_SESSION['usuario']);
-                                    echo 'se registro correctamente';
-                                    self::_mostrarRegistrarProducto(null, $listaCategoria, null, null,$pselec,$um,self::$_opcionesMenuLateral);
+                                    $_SESSION['proveedor']=null;
+                                    self::_mostrarRegistrarProducto(null, $listaCategoria, null, null,$pselec,$um,'se registro correctamente',self::$_opcionesMenuLateral);
                                 } else {
-                                    echo 'completa todos los datos';
+                                     self::_mostrarRegistrarProducto(null, $listaCategoria, null, null,null,$um,'completa todos los datos',self::$_opcionesMenuLateral);
                                 }
                                 break;
                             default:
                                 break;
                         }
                     } else {
-                        self::_mostrarRegistrarProducto(null, $listaCategoria, null, null,$pselec,$um, self::$_opcionesMenuLateral);
+                        self::_mostrarRegistrarProducto(null, $listaCategoria, null, null,$pselec,$um,null, self::$_opcionesMenuLateral);
                     }
                     break;
 
@@ -164,7 +170,7 @@ abstract class ProductoView {
 
                     if (isset ($_REQUEST['boton'])) {
                      $boton = $_REQUEST['boton'];
-                        $opcmarcas=MarcaLogic::getAll();
+                     $opcmarcas=MarcaLogic::getAll();
                     switch ($boton) {
                         case 'modificar':
                             $categoria = CategoriaLogic::getCategoriaPorId($_POST['categoria']);
@@ -174,28 +180,42 @@ abstract class ProductoView {
                                 $marcas[$m[1]->getMarcaId()]=$m[1];
                             }
                             $_SESSION['marcass']=$marcas;
-                            self::_mostrarModificarCategoria($listaCategoria,  $opcmarcas, ($_SESSION['marcass']), $categoria, self::$_opcionesMenuLateral);
+                            self::_mostrarModificarCategoria($listaCategoria,  $opcmarcas, ($_SESSION['marcass']), $categoria,null, self::$_opcionesMenuLateral);
                             break;
                         case 'agregar':
                             $marcas=$_SESSION['marcass'];
                             $marcas[$_POST['marca']]=MarcaLogic::getMarcaPorId($_POST['marca']);
                             $_SESSION['marcass']=$marcas;
                             $categoria=CategoriaLogic::getCategoriaPorId($_POST['categoriaId']);
-                             self::_mostrarModificarCategoria($listaCategoria,  $opcmarcas, ($_SESSION['marcass']), $categoria, self::$_opcionesMenuLateral);
+                             self::_mostrarModificarCategoria($listaCategoria,  $opcmarcas, ($_SESSION['marcass']), $categoria,null, self::$_opcionesMenuLateral);
 
                             break;
                         case 'eliminar':
                             $id=$_GET['marca'];
                             $mc=MarcaCategoriaLogic::buscarMarcaCategoriaPorMarcaYCategoria($id, $_GET['categoria']);
-                            
-                                MarcaCategoriaLogic::eliminarMarcaCategoria($mc->getMarcaCategoriaId());
-                            
-                            unset($_SESSION['marcass'][$_GET['marca']]);
-                             $listaCategoria = CategoriaLogic::getAll();
-                             $categoria=CategoriaLogic::getCategoriaPorId($_GET['categoria']);
-                             self::_mostrarModificarCategoria($listaCategoria,  $opcmarcas, ($_SESSION['marcass']), $categoria, self::$_opcionesMenuLateral);
+                            if($mc ==null){
+                                unset($_SESSION['marcass'][$_GET['marca']]);
+                                 $listaCategoria = CategoriaLogic::getAll();
+                                 $categoria=CategoriaLogic::getCategoriaPorId($_GET['categoria']);
+                                 self::_mostrarModificarCategoria($listaCategoria,  $opcmarcas, ($_SESSION['marcass']), $categoria,null, self::$_opcionesMenuLateral);
+                            }else{
+                                if( MarcaCategoriaLogic::eliminarMarcaCategoria($mc->getMarcaCategoriaId())){
+
+                                unset($_SESSION['marcass'][$_GET['marca']]);
+                                 $listaCategoria = CategoriaLogic::getAll();
+                                 $categoria=CategoriaLogic::getCategoriaPorId($_GET['categoria']);
+                                 self::_mostrarModificarCategoria($listaCategoria,  $opcmarcas, ($_SESSION['marcass']), $categoria,null, self::$_opcionesMenuLateral);
+
+                                 }else{
+                                     $listaCategoria = CategoriaLogic::getAll();
+                                 $categoria=CategoriaLogic::getCategoriaPorId($_GET['categoria']);
+                                     self::_mostrarModificarCategoria($listaCategoria,  $opcmarcas, ($_SESSION['marcass']), $categoria, 
+                                             'No se puede eliminar la marca porque existen productos con dicha categoria',self::$_opcionesMenuLateral);
+                                 }
+                            }
                              break;
                         case 'Modificar categoria':
+                            if(count($_SESSION['marcass']>0)){
                             $nombre = $_POST['nombre'];
                             $descripcion = $_POST['descripcion'];
                             $catid=CategoriaLogic::editarCategoria($_POST['categoriaId'], $nombre, $descripcion);
@@ -204,19 +224,25 @@ abstract class ProductoView {
                             }
                             $_SESSION['marcass']=null;
                              $listaCategoria = CategoriaLogic::getAll();
-                            self::_mostrarModificarCategoria($listaCategoria,null, null, null, self::$_opcionesMenuLateral);
+                            self::_mostrarModificarCategoria($listaCategoria,null, null, null,null, self::$_opcionesMenuLateral);
+                            }else{
+                                 $listaCategoria = CategoriaLogic::getAll();
+                                 $categoria=CategoriaLogic::getCategoriaPorId($_GET['categoria']);
+                                     self::_mostrarModificarCategoria($listaCategoria,  $opcmarcas, ($_SESSION['marcass']), $categoria, "Se debe tener al menos una marca",self::$_opcionesMenuLateral);
+                            }
                             
                             break;
                     }
 
                     }else{
                         $listaCategoria = CategoriaLogic::getAll();
-                    self::_mostrarModificarCategoria($listaCategoria,null, null, null, self::$_opcionesMenuLateral);
+                    self::_mostrarModificarCategoria($listaCategoria,null, null, null, null,self::$_opcionesMenuLateral);
                     }
 
                     break;
 
                  case 'ingresarCategoria':
+                  //   echo $_REQUEST['boton'];
                    $marcas= MarcaLogic::getAll();
                     if(isset ($_REQUEST['boton'])){
                     $boton = $_REQUEST['boton'];
@@ -228,17 +254,22 @@ abstract class ProductoView {
                             $m=$_SESSION['marcas'];
                             $m[$_POST['marca']] = MarcaLogic::getMarcaPorId($_POST['marca']);
                             $_SESSION['marcas']=$m;
-                            self::_mostrarRegistrarCategoria($_SESSION['marcas'],$marcas, self::$_opcionesMenuLateral);
+                            self::_mostrarRegistrarCategoria($_SESSION['marcas'],$marcas,null, self::$_opcionesMenuLateral);
 
                             break;
                         case 'eliminar':
                             $arre = $_SESSION['marcas'];
                             unset($arre[$_GET['marca']]);
                             $_SESSION['marcas'] = array_values($arre);
-                            self::_mostrarRegistrarCategoria(($_SESSION['marcas']),$marcas, self::$_opcionesMenuLateral);
+                            self::_mostrarRegistrarCategoria(($_SESSION['marcas']),$marcas,null, self::$_opcionesMenuLateral);
                             break;
 
                         case 'Agregar categoria':
+                            if(!isset ($_SESSION['marcas'])){
+                                $_SESSION['marcas']=NULL;
+                            }
+                            if( count($_SESSION['marcas']>0) & $_SESSION['marcas']!=null & isset ($_POST['nombre'])){
+                                
                             $nombre = $_POST['nombre'];
                             $descripcion = $_POST['descripcion'];
                             $catid=CategoriaLogic::insertarCategoria($nombre, $descripcion);
@@ -246,12 +277,16 @@ abstract class ProductoView {
                                 MarcaCategoriaLogic::insertar($mc->getMarcaId(), $catid);
                             }
                             $_SESSION['marcas']=null;
-                            self::_mostrarRegistrarCategoria(null,null, self::$_opcionesMenuLateral);
+                            self::_mostrarRegistrarCategoria(null,null,'se registro correctamente', self::$_opcionesMenuLateral);
+
+                            }else{
+                               self::_mostrarRegistrarCategoria($_SESSION['marcas'],$marcas,'se debe asignar por lo menos una marca y asignar un nombre', self::$_opcionesMenuLateral);
+                            }
                             break;
                     }
 
                     }else{
-                        self::_mostrarRegistrarCategoria(null,$marcas, self::$_opcionesMenuLateral);
+                        self::_mostrarRegistrarCategoria(null,$marcas,null, self::$_opcionesMenuLateral);
                     }
 
                     break;
@@ -273,7 +308,7 @@ abstract class ProductoView {
 
 
 
-    private static function _mostrarRegistrarProducto($listaProveedor, $listaCategoria, $marcas, $proveedores,$selec,$um, $opcionesMenuLateral) {
+    private static function _mostrarRegistrarProducto($listaProveedor, $listaCategoria, $marcas, $proveedores,$selec,$um,$mensaje, $opcionesMenuLateral) {
         require_once 'productos_registrarProducto.php';
     }
 
@@ -281,11 +316,11 @@ abstract class ProductoView {
         require_once 'productos_modificarProducto.php';
     }
 
-    private static function _mostrarRegistrarCategoria($listaSubCategoria,$marcas, $opcionesMenuLateral) {
+    private static function _mostrarRegistrarCategoria($listaSubCategoria,$marcas,$mensaje, $opcionesMenuLateral) {
         require_once 'productos_registrarCategoria.php';
     }
 
-    private static function _mostrarModificarCategoria($listaCategoria,$opcmarcas, $marcas, $categoria, $opcionesMenuLateral) {
+    private static function _mostrarModificarCategoria($listaCategoria,$opcmarcas, $marcas, $categoria,$mensaje, $opcionesMenuLateral) {
        
         require_once 'producto_modificarCategoria.php';
     }

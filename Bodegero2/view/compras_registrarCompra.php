@@ -20,7 +20,6 @@
                         <div id="bloque_izquierdo">
                             <select name="proveedor_id">
                                 <?php  foreach ($proveedores as $proveedor){ ?>
-
                                     <option value="<?php echo $proveedor[0]->getProveedorId() ?>"><?php echo $proveedor[1]->getRazonSocial(); ?></option>
                                 <?php } ?>
                             </select><br/>
@@ -47,7 +46,6 @@
                     <div id="bloque_centrado">
                         <div id="bloque_izquierdo">
                             <select name="producto">
-                                <option selected value="ninguno">Producto</option>
                                 <?php foreach ($productosPorProveedor as $producto): ?>
                                     <option value="<?php echo $producto->getProductoId() ?>"><?php echo $producto->getNombre() . ', Precio de Compra Unitario: S/.' . $producto->getPrecioCompra(); ?></option>
                                 <?php endforeach ?>

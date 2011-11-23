@@ -84,7 +84,7 @@
                     <td><?php if ($marcas != null) { ?>
                             <select name="marca">
                                 <?php foreach ($marcas as $marca) {  ?>
-                                    <option value="<?php echo $marca->getMarcaId();?>"><?php echo $marca->getNombre(); ?></option>
+                                    <option value="<?php echo $marca[0]; ?>"><?php echo $marca[1]->getNombre(); ?></option>
                                 <?php } ?>
                             </select>
                         <?php } ?>

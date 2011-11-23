@@ -1,6 +1,7 @@
 <?php require_once 'u_encabezadoForm.php'; ?>
 <!-- ####################################################################################################### -->
 <div id="cuerpo">
+     
     <div id="menu_lateral">
         <ul>
             <?php
@@ -13,11 +14,14 @@
     <div id="contenido">
         <fieldset>
             <legend>Registrar Categoria</legend>
-        <form method="POST" action="?opcion=ingresarCategoria">
+            <form method="POST" action="?opcion=ingresarCategoria" id="formIngresar" name="formIngresar">
             <table width="100%">
+                <?php if($mensaje != null){?>
                 <tr>
-                    <td colspan="2"><h1>Ingresar Categoria</h1></td>
+                    <td >Mensaje</td>
+                    <td ><?php echo $mensaje; ?></td>
                 </tr>
+                <?php } ?>
                 <tr>
                     <td >Nombre de Categoria:</td>
                     <td><input type="text" id="nombre" name="nombre" /></td>
@@ -57,7 +61,17 @@
                     </tbody>
                 </table>
             <?php } ?>
-            <input type="submit" name="boton" value="Agregar categoria" />
+      
+                <input type="submit" name="boton" value="Agregar categoria" onclick=""/>
+<!--            <script>
+                function validar(){
+                    if(document.getElementById("nombre").value==''){
+                        alert("Debe ingresar el nombre de la categoria");
+                    }else{
+                        document.getElementById("formIngresar").submit();
+                    }
+                }
+            </script>-->
         </form>
         </fieldset>
     </div>

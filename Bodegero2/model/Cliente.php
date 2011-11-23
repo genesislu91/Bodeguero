@@ -69,6 +69,7 @@ class Cliente implements  InterfaceModelsUsuario{
         $sql->addValues($this->_fechaRegistro);
         $sql->addValues($this->_personaId);
         $sql->addValues($this->_usuarioId);
+        echo $sql;
         return Persistence::consultar($sql, 0);
     }
     public function listarPorUsuario() {
@@ -96,6 +97,7 @@ class Cliente implements  InterfaceModelsUsuario{
             $cliente = new Cliente($_clienteId, $_fechaRegistro, $_personaId, $_tipo,$_usuarioId);
             $lista[] = $cliente;
         }
+       
         return $lista;
     }
  }

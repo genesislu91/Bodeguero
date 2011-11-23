@@ -18,7 +18,6 @@ abstract class DetalleVentaLogic{
         return $encontrados;
      }
      public static function mostrarTodoCompleto($detalles){
-        //$detalles = self::getAll();
         $lista = array();
         foreach($detalles as $detalle){
             $producto = ProductoLogic::getProductoPorId($detalle->getProductoId());

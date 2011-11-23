@@ -1,5 +1,4 @@
 <?php
-
 require_once '../model/DetalleCompra.php';
 require_once 'CompraLogic.php';
 require_once 'DetalleCompraLogic.php';
@@ -7,11 +6,8 @@ require_once 'ProductoLogic.php';
 require_once 'UnidadMedidaLogic.php';
 require_once 'CategoriaLogic.php';
 require_once 'MarcaCategoriaLogic.php';
-
 abstract class CarritoCompraLogic {
-
     private static $_carritoCompra = '';
-
     public static function agregarProducto($productoId, $cantidad) {
         $precioCompra = ProductoLogic::getProductoPorId($productoId)->getPrecioCompra();
         $encontrado = false;
@@ -26,20 +22,18 @@ abstract class CarritoCompraLogic {
                 }
             }
         }
-        if (!$encontrado) {
+        if(!$encontrado){
             $subtotal = $cantidad * $precioCompra;
             $detalleCompra = new DetalleCompra(null, null, $productoId, $precioCompra, $cantidad, $subtotal);
             self::$_carritoCompra[] = $detalleCompra;
         }
         $_SESSION['carritoCompra'] = serialize(self::$_carritoCompra);
     }
-
     public static function removerProducto($posicion) {
         self::$_carritoCompra = unserialize($_SESSION['carritoCompra']);
         unset(self::$_carritoCompra[$posicion]);
         $_SESSION['carritoCompra'] = serialize(self::$_carritoCompra);
     }
-
     public static function obtenerPrecioTotal() {
         self::$_carritoCompra = unserialize($_SESSION['carritoCompra']);
         $precioTotal = 0;
@@ -55,10 +49,10 @@ abstract class CarritoCompraLogic {
         self::$_carritoCompra = array();
         $_SESSION['carritoCompra'] = serialize(self::$_carritoCompra);
     }
-
     public static function mostrarCarrito() {
         self::$_carritoCompra = unserialize($_SESSION['carritoCompra']);
         if (self::$_carritoCompra != '') {
+            $carritoCompra = array();
             foreach (self::$_carritoCompra as $i => $detalleCompra) {
                 $carritoCompra[$i]['producto'] = ProductoLogic::getProductoPorId($detalleCompra->getProductoId())->getNombre();
                 $carritoCompra[$i]['categoria'] = CategoriaLogic::getCategoriaPorId((MarcaCategoriaLogic::buscarMarcasCategoriaPorId((ProductoLogic::getProductoPorId($detalleCompra->getProductoId())->getMarcaCategoriaId()))->getCategoria()))->getNombre();
@@ -71,18 +65,17 @@ abstract class CarritoCompraLogic {
         }
         return self::$_carritoCompra;
     }
-
     public static function procesarCompra() {
         self::$_carritoCompra = unserialize($_SESSION['carritoCompra']);
-        $compraId = CompraLogic::insertarCompra(self::obtenerPrecioTotal(), date('Y-m-d'), $_SESSION['proveedor_id']);
-        foreach (self::$_carritoCompra as $detalleCompra) {
-            DetalleCompraLogic::insertarDetalleCompra($compraId, $detalleCompra->getProductoId(), $detalleCompra->getPrecioCompra(), $detalleCompra->getCantidad(), $detalleCompra->getSubtotal());
-            ProductoLogic::actualizarStock($detalleCompra->getProductoId(), $detalleCompra->getCantidad());
+        if(self::$_carritoCompra != null){
+            $compraId = CompraLogic::insertarCompra(self::obtenerPrecioTotal(), date('Y-m-d'), $_SESSION['proveedor_id']);
+            foreach (self::$_carritoCompra as $detalleCompra) {
+                DetalleCompraLogic::insertarDetalleCompra($compraId, $detalleCompra->getProductoId(), $detalleCompra->getPrecioCompra(), $detalleCompra->getCantidad(), $detalleCompra->getSubtotal());
+                ProductoLogic::actualizarStock($detalleCompra->getProductoId(), $detalleCompra->getCantidad());
+            }
+            unset($_SESSION['carritoCompra']);
+            unset($_SESSION['proveedor_id']);
         }
-        unset($_SESSION['carritoCompra']);
-        unset($_SESSION['proveedor_id']);
     }
-
 }
-
 ?>

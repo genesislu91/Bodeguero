@@ -99,6 +99,7 @@ class ProductoLogic {
         $producto->actualizar();
     }
     public static function MostrarProductosCompleto($productosa){
+        
         $lista=array();
         foreach ($productosa as $p) {
             $proveedor=ProveedorLogic::getProveedorPorId($p->getProveedorId());

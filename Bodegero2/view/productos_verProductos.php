@@ -11,12 +11,10 @@
         </ul>
     </div>
     <div id="contenido">
+        <fieldset>
+            <legend>Ver productos</legend>
         <form method="POST" action="?opcion=verProducto">
             <table width="100%">
-                <tr>
-                    <td colspan="4"></td>
-                </tr>
-
                 <tr>
                     <td><input type="radio" checked="true" name="bProductos" value="1" />Por Categoria:</td>
                     <td>
@@ -83,7 +81,7 @@
             </tr>
             </table>
         </form>
-
+        </fieldset>
 
 
     </div>

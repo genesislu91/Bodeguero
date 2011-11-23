@@ -11,7 +11,8 @@
                 </ul>
             </div>
             <div id="contenido">
-                <center><h1>Mi Informacion</h1></center>
+                <fieldset>
+                    <legend>Mi Informacion</legend>
 				<form action="" method="POST" id="formulario">
                                     <label for="empresa">Empresa:</label>    <input name="empresa" type="text" disabled="true" value="<?php echo $pj->getRazonSocial(); ?>" readonly/><br/>
                                     <label for="correo">Correo Electronico:</label>	<input name="correo" disabled="true" type="text" value="<?php echo $pj->getCorreoElectronico(); ?>" readonly/><br/>
@@ -19,6 +20,7 @@
 						<label for="ruc">RUC:</label><input name="ruc" type="text" disabled="true" value="<?php echo $pj->getRuc(); ?>" readonly/><br/>
 						<label for="telefono">Telefono:</label>	<input name="telefono" type="text"  disabled="true" value="<?php echo $pj->getTelefono(); ?>" readonly/><br/>
 				</form>
+                </fieldset>
             </div>            
         </div>
 <!-- ####################################################################################################### -->

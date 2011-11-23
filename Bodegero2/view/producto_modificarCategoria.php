@@ -1,4 +1,4 @@
-<?php require_once 'u_encabezadoForm.php'; ?>
+ <?php require_once 'u_encabezadoForm.php'; ?>
 <!-- ####################################################################################################### -->
 <div id="cuerpo">
     <div id="menu_lateral">
@@ -11,8 +11,16 @@
         </ul>
     </div>
     <div id="contenido">
+        <fieldset>
+        <legend>Modificar Categoria</legend>
         <form method="POST" action="?opcion=editarCategoria">
             <table width="100%">
+                   <?php if($mensaje != null){?>
+                <tr>
+                    <td >Mensaje</td>
+                    <td ><?php echo $mensaje; ?></td>
+                </tr>
+                <?php } ?>
                 <tr><td>Nombre de Categoria:</td> <td> <?php if ($listaCategoria != null) { ?>
                             <select name="categoria">
                                 <?php foreach ($listaCategoria as $cat) { ?>
@@ -55,7 +63,8 @@
                 <tr><td colspan="2">
                         <input type="submit" name="boton" value="Modificar categoria" /></td></tr>
             </table>
-
+        </form>
+</fieldset>
     </div>
 </div>
 <!-- ####################################################################################################### -->

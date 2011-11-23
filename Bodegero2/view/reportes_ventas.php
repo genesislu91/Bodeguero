@@ -25,7 +25,7 @@
                                     <th>Código</th>
                                     <th>Producto</th>
                                     <th>Proveedor</th>
-                                    <th>Cantidad Total Vendida</th>
+                                    <th>Cantidad total vendida</th>
                                 </tr>
                             </thead>
                             <tbody>

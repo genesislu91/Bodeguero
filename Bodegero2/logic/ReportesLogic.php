@@ -1,15 +1,4 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of ReportesLogic
- *
- * @author jose
- */
 require_once 'VentaLogic.php';
 require_once 'DetalleVentaLogic.php';
 require_once 'ProductoLogic.php';
@@ -17,12 +6,10 @@ require_once 'ProveedorLogic.php';
 require_once 'PersonaJuridicaLogic.php';
 require_once 'CompraLogic.php';
 require_once 'DetalleCompraLogic.php';
-
-abstract class ReportesLogic {
-
+abstract class ReportesLogic{
     public static function getDetallesVentaDeUsuarioActual() {
         $ventaIds = array();
-        foreach (VentaLogic::getAll() as $venta) {
+        foreach(VentaLogic::getAllPorMes() as $venta){
             $ventaIds[] = $venta->getVentaId();
         }
         $ventaIds = array_unique($ventaIds);
@@ -60,7 +47,7 @@ abstract class ReportesLogic {
 
      public static function getDetallesCompraDeUsuarioActual() {
         $compraIds = array();
-        foreach (CompraLogic::getAll() as $compra) {
+        foreach (CompraLogic::getAllPorMes() as $compra) {
             $compraIds[] = $compra->getCompraId();
         }
         $compraIds = array_unique($compraIds);

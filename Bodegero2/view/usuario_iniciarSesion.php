@@ -20,7 +20,7 @@ and open the template in the editor.
                         <legend>Formulario de Inicio de Sesión</legend>
                         <label for="usuario">Usuario</label><input type="text" name="usuario"/><br/>
                         <label for="contrasenna">Contraseña</label><input type="password" name="contrasenna"/><br/>
-                        <a href="#">¿Olvidó su Contraseña?</a>
+                       
                         <input type="submit" value="Iniciar Sesión"/>
                         <?php
                         if ($mensaje != null) {

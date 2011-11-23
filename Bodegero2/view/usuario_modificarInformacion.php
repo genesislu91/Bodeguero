@@ -11,7 +11,8 @@
                 </ul>
             </div>
             <div id="contenido">
-                <center><h1>Modificar Mi Perfil</h1></center>
+               <fieldset>
+                    <legend>Mi Informacion</legend>
                 <?php if($mensaje != null){
                     echo $mensaje;  } ?>
 				<form  action="?opcion=cambioPerfil" method="POST" id="formulario">
@@ -36,6 +37,7 @@
                                                 </div></br>
                                                 <p><input   type="submit" value="Guardar Cambios" /></p>
 				</form>
+               </legend>
             </div>
             
         </div>

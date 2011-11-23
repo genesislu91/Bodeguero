@@ -30,9 +30,7 @@
             <legend>Registrar Marca</legend>
         <form method="POST" action="?opcion=ingresarMarca">
             <table width="100%">
-                <tr>
-                    <td colspan="2"><h1>Ingresar Marca</h1></td>
-                </tr>
+           
                 <tr>
                     <td >Nombre de Marca:</td>
                     <td><input type="text" id="nombre" name="nombre" /></td>

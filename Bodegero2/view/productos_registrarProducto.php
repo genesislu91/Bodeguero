@@ -15,6 +15,12 @@
             <legend>Registrar Producto</legend>
         <form method="POST" action="?opcion=registrarProducto">
             <table width="100%">
+                  <?php if($mensaje != null){?>
+                <tr>
+                    <td >Mensaje</td>
+                    <td colspan="3"><?php echo $mensaje; ?></td>
+                </tr>
+                <?php } ?>
                 <tr>
                     <td>Proveedor</td>
                     <td colspan="2"><input type="text" name="proveedor" value="<?php if($selec!=null){echo $selec[0][1]->getRazonSocial();}?>"/></td><td><input type="submit" name="boton" value="filtrar"></td>
